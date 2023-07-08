@@ -41,7 +41,7 @@ dependencies {
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveBaseName.set("shadow")
+        archiveClassifier.set("shadow")
         mergeServiceFiles()
         minimize()
         manifest {

@@ -17,6 +17,7 @@
 package de.nicklasmatzulla.betterutils.commands;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.Role;
@@ -33,6 +34,9 @@ public class CopyRoleCommand extends ListenerAdapter {
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
         if (!event.isFromGuild())
             return;
+        if (!event.getMember().hasPermission(Permission.MANAGE_ROLES))
+            return;
+
         if (event.getName().equals("copyrole")) {
             event.deferReply(true).queue();
             final Role targetRole = event.getOption("role", OptionMapping::getAsRole);

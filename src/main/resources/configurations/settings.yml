@@ -1,1 +1,2 @@
-token: ""
+token: "" # Discord Bot Token
+featureRequestChannelId: 0 # Channel id of the feature request channel

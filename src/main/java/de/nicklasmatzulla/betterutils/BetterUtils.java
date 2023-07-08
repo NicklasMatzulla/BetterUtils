@@ -17,6 +17,7 @@
 package de.nicklasmatzulla.betterutils;
 
 import de.nicklasmatzulla.betterutils.commands.CopyRoleCommand;
+import de.nicklasmatzulla.betterutils.commands.FeatureRequestCommand;
 import de.nicklasmatzulla.betterutils.config.SettingsConfiguration;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
@@ -54,6 +55,7 @@ public class BetterUtils extends ListenerAdapter {
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .addEventListeners(this)
                 .addEventListeners(new CopyRoleCommand())
+                .addEventListeners(new FeatureRequestCommand())
                 .build();
     }
 
@@ -63,6 +65,8 @@ public class BetterUtils extends ListenerAdapter {
         jda.upsertCommand("copyrole", "Copy a role.")
                 .addOption(OptionType.ROLE, "role", "The role that should be copied.", true)
                 .addOption(OptionType.STRING, "name", "The name that the new role should be assigned.", true)
+                .queue();
+        jda.upsertCommand("featurerequest", "Request a feature that should be implemented")
                 .queue();
     }
 

@@ -35,6 +35,9 @@ public class SettingsConfiguration {
     @Getter
     private String token;
 
+    @Getter
+    private Long featureRequestChannelId;
+
     public SettingsConfiguration() {
         SettingsConfiguration.instance = this;
         this.config = load();
@@ -62,6 +65,7 @@ public class SettingsConfiguration {
 
     private void init() {
         this.token = this.config.getString("token");
+        this.featureRequestChannelId = this.config.getLong("featureRequestChannelId");
     }
 
 }

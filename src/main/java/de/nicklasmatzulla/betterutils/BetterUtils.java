@@ -16,6 +16,7 @@
 
 package de.nicklasmatzulla.betterutils;
 
+import de.nicklasmatzulla.betterutils.commands.AdminCommand;
 import de.nicklasmatzulla.betterutils.commands.CopyRoleCommand;
 import de.nicklasmatzulla.betterutils.commands.FeatureRequestCommand;
 import de.nicklasmatzulla.betterutils.config.SettingsConfiguration;
@@ -23,6 +24,7 @@ import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.DefaultMemberPermissions;
@@ -58,6 +60,7 @@ public class BetterUtils extends ListenerAdapter {
                 .addEventListeners(this)
                 .addEventListeners(new CopyRoleCommand())
                 .addEventListeners(new FeatureRequestCommand())
+                .addEventListeners(new AdminCommand())
                 .build();
     }
 
@@ -74,6 +77,16 @@ public class BetterUtils extends ListenerAdapter {
                 .setDefaultPermissions(DefaultMemberPermissions.enabledFor(Permission.MANAGE_ROLES))
                 .setGuildOnly(true)
                 .queue();
+        if (this.shardManager.getShardsTotal() == this.shardManager.getShardsRunning()) {
+            final SettingsConfiguration settingsConfiguration = SettingsConfiguration.getInstance();
+            final Long supportGuildId = settingsConfiguration.getSupportGuildId();
+            final Guild supportGuild = this.shardManager.getGuildById(supportGuildId);
+            if (supportGuild != null) {
+                supportGuild.upsertCommand("admin", "Manage BetterUtils functions")
+                        .addOption(OptionType.STRING, "function", "What action do you want to perform?", true, true)
+                        .queue();
+            }
+        }
     }
 
 }

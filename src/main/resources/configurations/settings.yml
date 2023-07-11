@@ -1,2 +1,3 @@
 token: "" # Discord Bot Token
+supportGuildId: 0 # The Guild id from the support server
 featureRequestChannelId: 0 # Channel id of the feature request channel
